@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace = "dev.mvc.admin.AdminDAOInter">
+  <select id="checkID" resultType="int" parameterType="String">
+    SELECT COUNT(id) as cnt
+    FROM admin
+    WHERE id=#{id}
+  </select>
+  
+  <insert id="create" parameterType="dev.mvc.admin.AdminVO">
+    INSERT INTO admin(adminno, id, passwd, grade)
+    VALUES (admin_seq.nextval, #{id}, #{passwd}, 'A')
+  </insert>
+  
+  <select id="login" resultType="int" parameterType="Map">
+    SELECT COUNT(adminno) as cnt
+    FROM admin
+    WHERE id=#{id} AND passwd=#{passwd}
+  </select>
+  
+  <!-- adminno로 관리자 정보 조회 -->
+  <select id="read" resultType="dev.mvc.admin.AdminVO" parameterType="int">
+    SELECT adminno, id, passwd, grade
+    FROM admin
+    WHERE adminno = #{adminno}
+  </select>
+  
+  <!-- id로 관리자 정보 조회 -->
+  <select id="readById" resultType="dev.mvc.admin.AdminVO" parameterType="String">
+    SELECT adminno, id, passwd, grade
+    FROM admin
+    WHERE id = #{id}
+  </select>
+</mapper> 
+ 
