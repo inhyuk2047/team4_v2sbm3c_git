@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ 
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dev.mvc.univ.UnivDAOInter">
+
+	<!-- 카테고리별 검색 레코드 갯수 -->
+	<select id="search_count" resultType="int"
+		parameterType="HashMap">
+		SELECT COUNT(*) as cnt
+		FROM univ
+		<choose>
+			<when test="word != null or word != ''"> <!-- 검색하는 경우의 레코드 갯수 -->
+				WHERE univname LIKE '%' || #{word} || '%' 
+				   OR location LIKE '%'|| #{word} || '%'
+			</when>
+		</choose>
+	</select>
+
+	<!-- 카테고리별 검색 목록 + 페이징 + 메인 이미지 -->
+	<select id="search_paging" resultType="dev.mvc.univ.UnivVO"
+		parameterType="HashMap">
+		SELECT univno, univname, location, r
+		FROM (
+		SELECT univno, univname, location, rownum as r
+		FROM univ
+		<choose>
+			<when test="word != null or word != ''">
+				WHERE univname LIKE '%' || #{word} || '%'
+				OR location LIKE '%' || #{word} || '%'
+			</when>
+
+		</choose>
+		ORDER BY univno
+
+		)
+		WHERE <![CDATA[ r >= #{start_num} AND r <= #{end_num} ]]>
+
+		<!-- 1 page: WHERE r >= 1 AND r <= 10; 2 page: WHERE r >= 11 AND r <= 20; 
+			3 page: WHERE r >= 21 AND r <= 30; -->
+
+	</select>
+
+
+
+</mapper> 
+
+
+
+
+
+
+
+   
+   

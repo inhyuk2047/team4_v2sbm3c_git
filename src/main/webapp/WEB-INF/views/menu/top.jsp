@@ -43,7 +43,7 @@
          <li class="dropdown">
           <a href="#">대학 정보</a>
           <ul class="dropdown-menu">
-            <li><a href="#">4년제</a></li>
+            <li><a href="/univ/search_paging.do">4년제</a></li>
             <li><a href="#">전문대</a></li>
             <li><a href="#">기타 등등</a></li>
           </ul>
